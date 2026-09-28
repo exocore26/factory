@@ -1,0 +1,272 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#111827">
+  <title>Exocore-26 Factory — Common Tool Requirements Forge</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="site-header">
+    <div>
+      <div class="eyebrow">EXOCORE-26 / FACTORY DIGITAL ASSET</div>
+      <h1>Common Tool Requirements Forge</h1>
+      <p class="subtitle">Turn a tool idea into a reusable requirements document and a development TODO — while actively testing what belongs in the Parent-Engine layer.</p>
+    </div>
+    <div class="header-actions">
+      <button class="ghost" id="newSessionBtn" title="Clear the current session">New</button>
+      <button class="ghost" id="saveSessionBtn" title="Download the current answers as JSON">Save JSON</button>
+      <label class="ghost file-button" title="Load a previously saved JSON session">Load JSON<input id="loadSessionInput" type="file" accept="application/json"></label>
+    </div>
+  </header>
+
+  <main class="shell">
+    <section class="intro-card">
+      <div>
+        <strong>Design rule:</strong> describe the sub-project first; abstract the shared capability second.
+      </div>
+      <div class="intro-note">This is a static, dependency-free site: suitable for GitHub Pages, GitLab Pages, or any simple web host.</div>
+    </section>
+
+    <div class="progress-wrap" aria-label="Progress">
+      <div class="progress-track"><div id="progressBar" class="progress-bar"></div></div>
+      <div class="progress-meta"><span id="progressLabel">Step 1 of 8</span><span id="autosaveLabel">Autosave: on</span></div>
+    </div>
+
+    <section class="workspace">
+      <aside class="step-list" id="stepList"></aside>
+      <div class="panel-stack">
+        <form id="forgeForm" autocomplete="off">
+          <section class="step-panel active" data-step="1">
+            <div class="panel-kicker">01 / FRAME</div>
+            <h2>What are we designing?</h2>
+            <p class="muted">Start with the thing a sub-project wants to build. The Forge will later look for the repeatable mechanism hidden inside it.</p>
+            <div class="grid two">
+              <label>Asset mode
+                <select data-key="assetMode">
+                  <option value="common-tool">Common tool</option>
+                  <option value="subproject-feature">Sub-project feature</option>
+                  <option value="adapter">Integration / adapter</option>
+                  <option value="agent-capability">Agent capability</option>
+                  <option value="knowledge-asset">Knowledge / retrieval asset</option>
+                  <option value="workflow-ui">Guided workflow / UI</option>
+                </select>
+              </label>
+              <label>Target sub-project / engine
+                <input data-key="targetEngine" placeholder="e.g. Droid Forge, website factory, agent engine">
+              </label>
+              <label>Domain
+                <select data-key="domain">
+                  <option value="developer-tooling">Developer tooling</option>
+                  <option value="app-generation">App generation</option>
+                  <option value="websites">Websites</option>
+                  <option value="agents">Agents</option>
+                  <option value="knowledge">Knowledge / documents</option>
+                  <option value="automation">Automation</option>
+                  <option value="media">Media</option>
+                  <option value="other">Other</option>
+                </select>
+              </label>
+              <label>Primary user
+                <select data-key="primaryUser">
+                  <option value="builder">Builder / developer</option>
+                  <option value="operator">Operator</option>
+                  <option value="designer">Designer / analyst</option>
+                  <option value="end-user">End user</option>
+                  <option value="ai-agent">AI agent</option>
+                </select>
+              </label>
+              <label>Lifecycle stage
+                <select data-key="lifecycle">
+                  <option value="idea">Idea</option>
+                  <option value="discovery">Discovery</option>
+                  <option value="prototype">Prototype</option>
+                  <option value="build">Build</option>
+                  <option value="integration">Integration</option>
+                  <option value="hardening">Hardening / reuse</option>
+                </select>
+              </label>
+              <label>Working name
+                <input data-key="name" placeholder="Give the capability a useful working name">
+              </label>
+            </div>
+          </section>
+
+          <section class="step-panel" data-step="2">
+            <div class="panel-kicker">02 / OUTCOME</div>
+            <h2>What problem does it solve?</h2>
+            <p class="muted">Write this in terms of user intent, not implementation. The output should remain meaningful if the implementation changes.</p>
+            <label>Problem statement
+              <textarea data-key="problem" rows="5" placeholder="What is difficult, repetitive, ambiguous, slow or fragile today?"></textarea>
+            </label>
+            <div class="grid two">
+              <label>Desired outcome
+                <textarea data-key="outcome" rows="5" placeholder="What should become reliably possible?"></textarea>
+              </label>
+              <label>Evidence of success
+                <textarea data-key="success" rows="5" placeholder="What observable evidence would tell us it works?"></textarea>
+              </label>
+            </div>
+            <label>What must remain true across different sub-projects?
+              <textarea data-key="invariants" rows="4" placeholder="Rules, contracts, behaviours, data semantics or user promises that should survive reuse."></textarea>
+            </label>
+          </section>
+
+          <section class="step-panel" data-step="3">
+            <div class="panel-kicker">03 / FLOW</div>
+            <h2>Describe the transformation</h2>
+            <p class="muted">Think of the tool as a bounded transformation: inputs → decisions → operations → outputs. This is the main abstraction boundary.</p>
+            <div class="grid two">
+              <label>Inputs
+                <textarea data-key="inputs" rows="6" placeholder="User answers, files, structured data, prompts, events, APIs, repository state..."></textarea>
+              </label>
+              <label>Outputs
+                <textarea data-key="outputs" rows="6" placeholder="Documents, code, configuration, tasks, records, API calls, decisions..."></textarea>
+              </label>
+              <label>Key decisions / rules
+                <textarea data-key="decisions" rows="6" placeholder="What does the system need to decide, resolve, validate or branch on?"></textarea>
+              </label>
+              <label>External dependencies
+                <textarea data-key="dependencies" rows="6" placeholder="APIs, filesystems, Git, models, services, device capabilities, human approvals..."></textarea>
+              </label>
+            </div>
+            <label>Failure modes and recovery
+              <textarea data-key="failures" rows="4" placeholder="What can go wrong, and what should the user/system do next?"></textarea>
+            </label>
+          </section>
+
+          <section class="step-panel" data-step="4">
+            <div class="panel-kicker">04 / ABSTRACT</div>
+            <h2>Which reusable capability is hiding inside it?</h2>
+            <p class="muted">Select every mechanism that could plausibly be shared across projects. The generator turns these into Parent-Engine candidates.</p>
+            <div class="capability-grid" id="capabilityGrid"></div>
+            <div class="callout">
+              <strong>Abstraction test</strong>
+              <p>Would a second unrelated sub-project need essentially the same mechanism with different content? If yes, treat it as a candidate shared capability. If only the content changes, keep the implementation in the sub-project.</p>
+            </div>
+            <fieldset>
+              <legend>Preferred abstraction boundary</legend>
+              <div class="radio-row">
+                <label><input type="radio" name="abstraction" data-key="abstraction" value="parent" checked> Parent-Engine service / primitive</label>
+                <label><input type="radio" name="abstraction" data-key="abstraction" value="shared-module"> Shared module</label>
+                <label><input type="radio" name="abstraction" data-key="abstraction" value="project-local"> Keep project-local</label>
+              </div>
+            </fieldset>
+          </section>
+
+          <section class="step-panel" data-step="5">
+            <div class="panel-kicker">05 / HITL + CONSTRAINTS</div>
+            <h2>Who decides, who verifies, and under what constraints?</h2>
+            <div class="grid two">
+              <label>Human decision points
+                <textarea data-key="humanGates" rows="5" placeholder="Where must a human review, approve, edit, reject or choose between alternatives?"></textarea>
+              </label>
+              <label>AI / automation responsibilities
+                <textarea data-key="automation" rows="5" placeholder="What can be generated, routed, validated or executed automatically?"></textarea>
+              </label>
+              <label>Roles involved
+                <textarea data-key="roles" rows="4" placeholder="e.g. Builder, Librarian, Reviewer, Operator, AI planner..."></textarea>
+              </label>
+              <label>Data sensitivity / permissions
+                <textarea data-key="permissions" rows="4" placeholder="Public, local-only, secrets, user data, project data, repository access..."></textarea>
+              </label>
+            </div>
+            <div class="grid three">
+              <label>Resource profile
+                <select data-key="resources">
+                  <option value="freemium-low-resource">Freemium-first / low-resource</option>
+                  <option value="local-first">Local-first</option>
+                  <option value="hosted">Hosted services acceptable</option>
+                  <option value="mixed">Mixed</option>
+                </select>
+              </label>
+              <label>State model
+                <select data-key="stateModel">
+                  <option value="stateless">Stateless per run</option>
+                  <option value="session">Session state</option>
+                  <option value="persistent">Persistent project state</option>
+                </select>
+              </label>
+              <label>Primary interface
+                <select data-key="interface">
+                  <option value="web">Web UI</option>
+                  <option value="cli">CLI</option>
+                  <option value="api">API</option>
+                  <option value="library">Library</option>
+                  <option value="multi">Multiple interfaces</option>
+                </select>
+              </label>
+            </div>
+          </section>
+
+          <section class="step-panel" data-step="6">
+            <div class="panel-kicker">06 / ACCEPT</div>
+            <h2>Define the boundary of “done”</h2>
+            <div class="grid two">
+              <label>Must do
+                <textarea data-key="mustDo" rows="6" placeholder="Concrete capabilities that are required for the first usable version."></textarea>
+              </label>
+              <label>Must not do
+                <textarea data-key="mustNotDo" rows="6" placeholder="Explicit exclusions to stop scope creep and protect the abstraction boundary."></textarea>
+              </label>
+              <label>Acceptance tests
+                <textarea data-key="acceptance" rows="7" placeholder="Write testable statements. One per line is useful."></textarea>
+              </label>
+              <label>Edge cases
+                <textarea data-key="edgeCases" rows="7" placeholder="Empty input, conflicting answers, bad files, failed APIs, partial completion..."></textarea>
+              </label>
+            </div>
+          </section>
+
+          <section class="step-panel" data-step="7">
+            <div class="panel-kicker">07 / REVIEW</div>
+            <h2>Review the proposed Parent-Engine extraction</h2>
+            <p class="muted">These are generated hypotheses, not existing Exocore-26 components. Adjust the capability selections before generating the documents.</p>
+            <div id="recommendations" class="recommendations"></div>
+            <div class="review-grid">
+              <div class="review-card"><span>Project-specific part</span><strong id="projectSpecificReview">—</strong></div>
+              <div class="review-card"><span>Reusable mechanism</span><strong id="reusableReview">—</strong></div>
+              <div class="review-card"><span>Primary boundary</span><strong id="boundaryReview">—</strong></div>
+            </div>
+            <label>Additional architectural notes
+              <textarea data-key="notes" rows="6" placeholder="Anything the generated requirements or TODO should explicitly preserve."></textarea>
+            </label>
+          </section>
+
+          <section class="step-panel" data-step="8">
+            <div class="panel-kicker">08 / GENERATE</div>
+            <h2>Generate the factory artefacts</h2>
+            <p class="muted">The Requirements Document explains what to build and why. The TODO Document turns it into an implementation sequence with Parent-Engine extraction checkpoints.</p>
+            <div class="output-toolbar">
+              <button type="button" class="primary" id="generateBtn">Generate / Refresh</button>
+              <button type="button" class="ghost" id="downloadReqBtn">Download Requirements.md</button>
+              <button type="button" class="ghost" id="downloadTodoBtn">Download TODO.md</button>
+              <button type="button" class="ghost" id="downloadBundleBtn">Download bundle</button>
+            </div>
+            <div class="output-tabs" role="tablist">
+              <button type="button" class="tab active" data-output="requirements">Requirements</button>
+              <button type="button" class="tab" data-output="todo">TODO</button>
+              <button type="button" class="tab" data-output="json">Session JSON</button>
+            </div>
+            <pre id="outputPreview" class="output-preview" tabindex="0"></pre>
+          </section>
+        </form>
+
+        <div class="nav-bar">
+          <button class="ghost" id="backBtn">Back</button>
+          <span id="stepHint">Answer the framing questions.</span>
+          <button class="primary" id="nextBtn">Next</button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div>Exocore-26 Factory asset · static · no external runtime dependencies</div>
+    <div>Use generated documents as working specifications, not as proof that a capability already exists.</div>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
